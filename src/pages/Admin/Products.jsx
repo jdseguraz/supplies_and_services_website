@@ -52,7 +52,7 @@ const ProductDetail = () => {
 
   const handleQuoteClick = () => {
     const productUrl = `${window.location.origin}/producto/${product.id}`
-    const message = `Hola, estoy interesado en este producto: ${product.name} - ${productUrl}`
+    const message = `Hola, estoy interesado en este producto. ${productUrl}`
     window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank')
   }
 

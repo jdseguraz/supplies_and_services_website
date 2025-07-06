@@ -5,7 +5,7 @@ import CategoriesPreview from '../../components/products/CategoriesPreview'
 
 const Home = () => {
   return (
-    <div className="space-y-12 pb-12">
+    <div className="space-y-12">
       <HeroBanner /> 
       <SocialMedia />
       <CategoriesPreview />

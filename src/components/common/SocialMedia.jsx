@@ -112,7 +112,7 @@ const SocialMedia = () => {
             <div className="flex justify-center gap-6">
               <div className="flex items-center gap-2">
                 <FaPhoneAlt className="text-[#5a3921]" />
-                <span className="text-[#6d4c3d]">+57 310 3588801</span>
+                <span className="text-[#6d4c3d]">+57 604 2385755</span>
               </div>
               <div className="flex items-center gap-2">
                 <FaWhatsapp className="text-[#5a3921]" />

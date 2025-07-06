@@ -42,10 +42,12 @@ const CategoriesPreview = () => {
     fetchCategoriesWithProducts()
   }, [])
 
-  const handleQuoteClick = (productId) => {
+  const handleQuoteClick = (productId, productName) => {
     const productUrl = `${window.location.origin}/producto/${productId}`
-    const message = `Hola, estoy interesado en este producto: ${productUrl}`
-    window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank')
+    const message = `¡Hola! Vengo desde tu sitio web. Estoy interesado en este producto. \n\nMe gustaría saber más información y disponibilidad.\n\nEnlace al producto: ${productUrl}`
+    const whatsappNumber = '573103588801'
+    const encodedMessage = encodeURIComponent(message)
+    window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank')
   }
 
   const openImageModal = (imageUrl) => {
@@ -149,7 +151,7 @@ const CategoriesPreview = () => {
                     
                     {/* Botón de cotización */}
                     <button
-                      onClick={() => handleQuoteClick(product.id)}
+                      onClick={() => handleQuoteClick(product.id, product.name)}
                       className="mt-auto w-full bg-[#5a3921] hover:bg-[#3a2516] text-[#f8f3e8] py-2 px-3 rounded flex items-center justify-center gap-2 transition-colors font-serif"
                     >
                       <FaWhatsapp className="text-[#e8d9c5]" />

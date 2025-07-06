@@ -14,7 +14,7 @@ const Navbar = () => {
         .from('categories')
         .select('id, name, slug')
         .order('name', { ascending: true })
-      
+        
       setCategories(data || [])
     }
 
@@ -26,19 +26,24 @@ const Navbar = () => {
     setIsOpen(false)
   }, [location])
 
+  // Scroll to top cuando cambia la ruta
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [location])
+
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
       <div className="container mx-auto px-4 py-3">
         <div className="flex justify-between items-center">
           {/* Logo */}
           <Link to="/">
-            <img src="/public/logo.png" alt="logo" className='h-[50px]' />
+            <img src="/public/logotipo.png" alt="logo" className='h-[50px]' />
           </Link>
 
           {/* Menú para desktop */}
           <nav className="hidden md:flex space-x-8">
             <Link 
-              to="/" 
+              to="/"
               className="text-gray-700 hover:text-amber-600 transition font-medium"
             >
               Inicio
@@ -81,7 +86,7 @@ const Navbar = () => {
           <div className="md:hidden mt-4 pb-4">
             <nav className="flex flex-col space-y-3">
               <Link 
-                to="/" 
+                to="/"
                 className="text-gray-700 hover:text-amber-600 transition font-medium py-2"
               >
                 Inicio

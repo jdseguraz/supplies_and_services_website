@@ -42,7 +42,7 @@ const ProductDetail = () => {
 
   const handleWhatsAppClick = () => {
     const productUrl = window.location.href;
-    const message = `¡Hola! Vengo desde tu sitio web. Estoy interesado en este producto:\n\n*${product.name}*\n\nMe gustaría saber más información y disponibilidad.\n\nEnlace al producto: ${productUrl}`;
+    const message = `¡Hola! Vengo desde tu sitio web. Estoy interesado en este producto. \n\nMe gustaría saber más información y disponibilidad.\n\nEnlace al producto: ${productUrl}`;
     const whatsappNumber = '573103588801'; // Reemplaza con tu número de WhatsApp
     const encodedMessage = encodeURIComponent(message);
     window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { supabase } from '../../lib/supabase'
 import { FaWhatsapp, FaInstagram, FaFacebook, FaMapMarkerAlt, FaPhone, FaEnvelope } from 'react-icons/fa'
 
 const Footer = () => {
   const [categories, setCategories] = useState([])
+  const location = useLocation()
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -18,6 +19,11 @@ const Footer = () => {
 
     fetchCategories()
   }, [])
+
+  // Scroll to top cuando cambia la ruta
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [location])
 
   return (
     <footer className="bg-black text-[#f8f3e8] pt-16 pb-8">
@@ -106,10 +112,10 @@ const Footer = () => {
               <li className="flex items-center group">
                 <FaEnvelope className="mr-4 text-[#c7a17a] group-hover:text-[#f8f3e8] transition-colors duration-300" size={20} />
                 <a 
-                  href="mailto:info@cinturonesart.com" 
+                  href="mailto:cinturonesfostmary@hotmail.es" 
                   className="text-[#e8d9c5] hover:text-[#c7a17a] transition-colors duration-300"
                 >
-                  info@cinturonesart.com
+                  cinturonesfostmary@hotmail.es
                 </a>
               </li>
             </ul>

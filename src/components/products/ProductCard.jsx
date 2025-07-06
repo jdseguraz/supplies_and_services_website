@@ -24,8 +24,10 @@ const ProductCard = ({ product }) => {
 
   const handleQuoteClick = (productId) => {
     const productUrl = `${window.location.origin}/producto/${productId}`
-    const message = `Hola, estoy interesado en este producto: ${productUrl}`
-    window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank')
+    const message = `¡Hola! Vengo desde tu sitio web. Estoy interesado en este producto. \n\nMe gustaría saber más información y disponibilidad.\n\nEnlace al producto: ${productUrl}`
+    const whatsappNumber = '573103588801' // Mismo número que en ProductDetail
+    const encodedMessage = encodeURIComponent(message)
+    window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank')
   }
 
   return (
@@ -38,7 +40,7 @@ const ProductCard = ({ product }) => {
       >
         {/* Contenedor de imágenes */}
         <div 
-          className="h-56 bg-gray-50 flex items-center justify-center cursor-pointer relative"
+          className="h-[180px] md:h-56 bg-gray-50 flex items-center justify-center cursor-pointer relative"
           onClick={() => product.images?.length > 0 && openImageModal(currentImageIndex)}
         >
           {product.images && product.images.length > 0 ? (
@@ -81,22 +83,25 @@ const ProductCard = ({ product }) => {
         {/* Detalles del producto */}
         <div className="p-4 flex flex-col flex-grow">
           <Link to={`/producto/${product.id}`} className="group">
-            <h3 className="text-black text-base line-clamp-2 mb-2 group-hover:text-[#5a3921] transition-colors">
-              {product.name || `Producto ${product.id}`}
-            </h3>
+            
+            {product.name ? (
+                <h3 className="text-black text-base line-clamp-2 mb-2 group-hover:text-[#5a3921] transition-colors">
+                  {product.name}
+                </h3>
+              ) : ('')}
           </Link>
           
           {product.description && (
             <p className="text-[#6d4c3d] text-sm mb-4 line-clamp-3">{product.description}</p>
           )}
 
-          <div className="mt-auto flex justify-between items-center">
+          <div className="mt-auto flex flex-col md:flex-row justify-between items-center">
             {product.price ? (
               <span className="text-[#c7a17a] font-bold text-lg">
                 ${product.price.toLocaleString()}
               </span>
             ) : (
-              <span className="text-[#6d4c3d] text-sm">Consultar precio</span>
+              <span className="text-[#6d4c3d] text-sm hidden md:flex">Consultar precio</span>
             )}
             
             <button
