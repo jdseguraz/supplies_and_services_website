@@ -30,15 +30,15 @@ const Footer = () => {
             <div className="space-y-3 text-gray-300 text-sm">
               <div className="flex items-center">
                 <FaPhone className="mr-3 text-blue-400" />
-                <span>+57 313 4646224</span>
+                <span>+57 313 464 6224</span>
               </div>
               <div className="flex items-center">
                 <FaEnvelope className="mr-3 text-blue-400" />
-                <span>ventas1@suppliesandservices.net</span>
+                <span>gerencia@suppliesandservices.net</span>
               </div>
               <div className="flex items-center">
                 <FaMapMarkerAlt className="mr-3 text-blue-400" />
-                <span>Colombia, CALLE 59 #50-35 PADRO, Medellín, Antioquia</span>
+                <span>CALLE 59 N° 50-35 BARRIO PRADO CENTRO - MEDELLÍN</span>
               </div>
             </div>
           </div>

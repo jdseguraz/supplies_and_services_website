@@ -75,7 +75,7 @@ const Contact = () => {
                   <input
                     type="tel"
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-                    placeholder="+57 123 456 7890"
+                    placeholder="313 464 6224"
                   />
                 </div>
               </div>
@@ -133,7 +133,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <p className="font-medium text-gray-800">Teléfono</p>
-                    <p className="text-gray-600">+57 313 4646224</p>
+                    <p className="text-gray-600">+57 313 464 6224</p>
                   </div>
                 </div>
                 
@@ -143,7 +143,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <p className="font-medium text-gray-800">Email</p>
-                    <p className="text-gray-600">ventas1@suppliesandservices.net</p>
+                    <p className="text-gray-600">gerencia@suppliesandservices.net</p>
                   </div>
                 </div>
                 
@@ -153,7 +153,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <p className="font-medium text-gray-800">Ubicación</p>
-                    <p className="text-gray-600">Colombia, CALLE 59 #50-35 PADRO, Medellín, Antioquia</p>
+                    <p className="text-gray-600">CALLE 59 N° 50-35 BARRIO PRADO CENTRO - MEDELLÍN</p>
                   </div>
                 </div>
                 
@@ -163,7 +163,11 @@ const Contact = () => {
                   </div>
                   <div>
                     <p className="font-medium text-gray-800">Horario de Atención</p>
-                    <p className="text-gray-600">Lun - Vie: 8:00 AM - 6:00 PM</p>
+                    <div className="text-gray-600 text-sm">
+                      <p>Lun - Vie: 8:00 AM - 5:00 PM</p>
+                      <p>Sábado: 8:00 AM - 12:00 PM</p>
+                      <p>Domingo: Cerrado</p>
+                    </div>
                   </div>
                 </div>
               </div>
