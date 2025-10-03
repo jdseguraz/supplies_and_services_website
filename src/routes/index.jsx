@@ -7,6 +7,7 @@ import Products from '../pages/Products'
 import Category from '../pages/Category'
 import Product from '../pages/Product'
 import Cart from '../pages/Cart'
+import Services from '../pages/Services'
 
 const router = createBrowserRouter([
   {
@@ -19,8 +20,9 @@ const router = createBrowserRouter([
       { path: 'categoria/:slug', element: <Category /> },
       { path: 'producto/:id', element: <Product /> },
       { path: 'carrito', element: <Cart /> },
-    ],
-  },
+      { path: 'servicios', element: <Services /> }
+    ]
+  }
 ])
 
 export default router
