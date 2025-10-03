@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { FaArrowLeft, FaQuoteLeft, FaChevronLeft, FaChevronRight } from 'react-icons/fa'
+import { ShoppingCart, Check } from 'phosphor-react'
 import { getProductById, getCategoryBySlug } from '../../data/products'
+import { useCart } from '../../contexts/CartContext'
 
 const Product = () => {
   const { id } = useParams()
@@ -10,6 +12,8 @@ const Product = () => {
   const [category, setCategory] = useState(null)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [loading, setLoading] = useState(true)
+  const [addedToCart, setAddedToCart] = useState(false)
+  const { addToCart, isInCart } = useCart()
 
   useEffect(() => {
     const productData = getProductById(parseInt(id))
@@ -24,6 +28,15 @@ const Product = () => {
   const handleQuoteRequest = () => {
     console.log(`Solicitud de cotización para: ${product.name}`)
     // Aquí se podría abrir un modal, redirigir a contacto, etc.
+  }
+
+  const handleAddToCart = () => {
+    if (product) {
+      addToCart(product, 1)
+      setAddedToCart(true)
+      // Resetear la animación después de 2 segundos
+      setTimeout(() => setAddedToCart(false), 2000)
+    }
   }
 
   const nextImage = () => {
@@ -226,16 +239,43 @@ const Product = () => {
               </div>
             )}
 
-            {/* Botón de cotización */}
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={handleQuoteRequest}
-              className="w-full bg-black text-white py-4 px-6 rounded-md font-semibold text-lg hover:bg-gray-800 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center space-x-3"
-            >
-              <FaQuoteLeft className="text-lg" />
-              <span>Solicitar Cotización</span>
-            </motion.button>
+            {/* Botones de acción */}
+            <div className="flex gap-4">
+              {/* Botón Añadir al carrito */}
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={handleAddToCart}
+                className={`flex-1 py-4 px-6 rounded-md font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center space-x-3 ${
+                  isInCart(product?.id) 
+                    ? 'bg-green-600 text-white hover:bg-green-700' 
+                    : 'bg-blue-600 text-white hover:bg-blue-700'
+                }`}
+              >
+                {isInCart(product?.id) ? (
+                  <>
+                    <Check size={20} weight="bold" />
+                    <span>En el carrito</span>
+                  </>
+                ) : (
+                  <>
+                    <ShoppingCart size={20} weight="regular" />
+                    <span>Añadir al carrito</span>
+                  </>
+                )}
+              </motion.button>
+
+              {/* Botón Cotizar ahora */}
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={handleQuoteRequest}
+                className="flex-1 bg-black text-white py-4 px-6 rounded-md font-semibold text-lg hover:bg-gray-800 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center space-x-3"
+              >
+                <FaQuoteLeft className="text-lg" />
+                <span>Cotizar ahora</span>
+              </motion.button>
+            </div>
           </motion.div>
         </div>
       </div>
