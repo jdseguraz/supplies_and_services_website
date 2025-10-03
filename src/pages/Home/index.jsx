@@ -1,30 +1,34 @@
 import { motion } from 'framer-motion'
-import { FaCog, FaIndustry, FaTools, FaSnowflake } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
+import { Scissors, Wrench, Factory, Snowflake, ArrowRight } from 'phosphor-react'
 import { CONTACT_CONFIG } from '../../constants/contact'
+import { getFeaturedCategories } from '../../data/products'
 
 const Home = () => {
   const services = [
     {
-      icon: <FaTools className="text-4xl text-blue-600" />,
+      icon: <Scissors className="text-4xl text-blue-600" weight="duotone" />,
       title: "Corte Laser",
       description: "Precisión y calidad en cortes láser para todas sus necesidades industriales."
     },
     {
-      icon: <FaCog className="text-4xl text-blue-600" />,
+      icon: <Wrench className="text-4xl text-blue-600" weight="duotone" />,
       title: "Corte de Lámina",
       description: "Cortes especializados en láminas con la más alta precisión técnica."
     },
     {
-      icon: <FaIndustry className="text-4xl text-blue-600" />,
+      icon: <Factory className="text-4xl text-blue-600" weight="duotone" />,
       title: "Dobles de Lámina",
       description: "Conformado y doblado de láminas para estructuras industriales."
     },
     {
-      icon: <FaSnowflake className="text-4xl text-blue-600" />,
+      icon: <Snowflake className="text-4xl text-blue-600" weight="duotone" />,
       title: "Refrigeración Industrial",
       description: "Suministro e instalación de sistemas de refrigeración industrial."
     }
   ]
+
+  const featuredCategories = getFeaturedCategories(6)
 
   return (
     <div className="min-h-screen">
@@ -44,13 +48,6 @@ const Home = () => {
               <p className="text-xl text-gray-600 mb-8 leading-relaxed">
                 Cálculo - Diseño - Suministro e instalación para plantas agro-industriales
               </p>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors duration-300 shadow-lg"
-              >
-                Conoce Nuestros Servicios
-              </motion.button>
             </motion.div>
             
             <motion.div
@@ -70,7 +67,7 @@ const Home = () => {
 
       {/* Services Section */}
       <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 flex flex-col items-center">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -105,11 +102,107 @@ const Home = () => {
               </motion.div>
             ))}
           </div>
+
+          <Link to="/servicios" className="mt-12">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors duration-300 shadow-lg flex items-center space-x-2"
+              >
+                <span>Conoce Nuestros Servicios</span>
+                <ArrowRight weight="bold" />
+              </motion.button>
+            </Link>
+        </div>
+      </section>
+
+      {/* Products Preview Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl font-bold text-gray-800 mb-6">
+              Catálogo de <span className="text-blue-600">Productos</span>
+            </h2>
+            <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed mb-8">
+              Amplio catálogo de productos industriales especializados para cámaras frigoríficas, 
+              sistemas de refrigeración y aplicaciones agro-industriales
+            </p>
+          </motion.div>
+
+          {/* Categories List - Clean informative layout */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="mb-16"
+          >
+            <div className="flex flex-wrap justify-center gap-8">
+              {featuredCategories.slice(0, 8).map((category, index) => (
+                <motion.div
+                  key={category.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.05 }}
+                  viewport={{ once: true }}
+                >
+                  <Link
+                    to={`/categoria/${category.slug}`}
+                    className="group block text-center hover:text-blue-600 transition-colors duration-300"
+                  >
+                    <div className="mb-3">
+                      <img
+                        src={category.image}
+                        alt={category.name}
+                        className=" w-28 h-28 mx-auto object-contain group-hover:scale-110 transition-transform duration-300"
+                      />
+                    </div>
+                    <h4 className="font-semibold text-gray-800 group-hover:text-blue-600 transition-colors">
+                      {category.name}
+                    </h4>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Call to Action */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center"
+          >
+            <h3 className="text-2xl font-bold text-gray-800 mb-4">
+              Explora Todo Nuestro Catálogo
+            </h3>
+            <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
+              Encuentra productos específicos, revisa especificaciones técnicas y solicita cotizaciones personalizadas
+            </p>
+            
+            <Link to="/productos">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-blue-600 text-white px-10 py-4 rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors duration-300 shadow-lg inline-flex items-center space-x-3"
+              >
+                <span>Ver Catálogo Completo</span>
+                <ArrowRight weight="bold" size={20} />
+              </motion.button>
+            </Link>
+          </motion.div>
         </div>
       </section>
 
       {/* About Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div
