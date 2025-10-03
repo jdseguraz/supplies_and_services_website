@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { Trash, Plus, Minus, ShoppingCart, WhatsappLogo } from 'phosphor-react'
 import { useCart } from '../../contexts/CartContext'
+import { CONTACT_CONFIG, URLS } from '../../constants/contact'
 
 const Cart = () => {
   const { items, totalItems, updateQuantity, removeFromCart, clearCart } = useCart()
@@ -31,12 +32,8 @@ const Cart = () => {
 
     message += 'Por favor, envíenme una cotización detallada.\n\n¡Gracias!'
 
-    // Codificar el mensaje para WhatsApp
     const encodedMessage = encodeURIComponent(message)
-    const whatsappUrl = `https://wa.me/573012345678?text=${encodedMessage}`
-    
-    // Abrir WhatsApp en una nueva ventana
-    window.open(whatsappUrl, '_blank')
+    window.open(`${URLS.whatsapp}/${CONTACT_CONFIG.whatsappNumber}?text=${encodedMessage}`, '_blank')
   }
 
   if (items.length === 0) {

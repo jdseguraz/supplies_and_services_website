@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { FaCog, FaIndustry, FaTools, FaSnowflake } from 'react-icons/fa'
+import { CONTACT_CONFIG } from '../../constants/contact'
 
 const Home = () => {
   const services = [
@@ -121,7 +122,7 @@ const Home = () => {
                 Experiencia y <span className="text-blue-600">Calidad</span>
               </h2>
               <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-                En Supplies and Services ACR SAS nos especializamos en brindar soluciones técnicas 
+                En {CONTACT_CONFIG.companyName} nos especializamos en brindar soluciones técnicas 
                 de alta calidad para la industria agro-industrial. Nuestro equipo de profesionales 
                 cuenta con amplia experiencia en el diseño, cálculo y ejecución de proyectos industriales.
               </p>

@@ -1,18 +1,31 @@
 import { motion } from 'framer-motion'
 import { FaQuoteLeft } from 'react-icons/fa'
+import { ShoppingCart, Check } from 'phosphor-react'
 import { Link } from 'react-router-dom'
+import { useCart } from '../../contexts/CartContext'
+import { CONTACT_CONFIG, URLS } from '../../constants/contact'
 
 const ProductCard = ({ product, index = 0 }) => {
   // Usar la nueva estructura de imágenes o fallback a la imagen única
   const images = product.images || (product.image ? [product.image] : [])
   const mainImage = images[0] || null
+  const { addToCart, isInCart } = useCart()
 
   const handleQuoteRequest = (e) => {
     e.preventDefault()
     e.stopPropagation()
-    // Por ahora solo un placeholder - luego se puede conectar a un sistema de cotización
-    console.log(`Solicitud de cotización para: ${product.name}`)
-    // Aquí se podría abrir un modal, redirigir a contacto, etc.
+    
+    // Crear mensaje para WhatsApp
+    const message = `¡Hola! Me interesa cotizar el siguiente producto:\n\n📦 *${product.name}*\n\n¿Podrían enviarme información sobre precio, disponibilidad y especificaciones técnicas?\n\n¡Gracias!`
+    
+    const encodedMessage = encodeURIComponent(message)
+    window.open(`${URLS.whatsapp}/${CONTACT_CONFIG.whatsappNumber}?text=${encodedMessage}`, '_blank')
+  }
+
+  const handleAddToCart = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    addToCart(product, 1)
   }
 
   return (
@@ -52,16 +65,37 @@ const ProductCard = ({ product, index = 0 }) => {
             {product.name}
           </h3>
 
-          {/* Botón de cotización */}
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={handleQuoteRequest}
-            className="w-full bg-gray-900 text-white py-2 px-3 rounded-md text-sm font-medium hover:bg-gray-800 transition-colors duration-200 flex items-center justify-center space-x-2"
-          >
-            <FaQuoteLeft className="text-xs" />
-            <span>Cotizar</span>
-          </motion.button>
+          {/* Botones de acción */}
+          <div className="flex gap-2">
+            {/* Botón añadir al carrito - solo icono */}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleAddToCart}
+              className={`p-2 rounded-md transition-colors duration-200 flex items-center justify-center ${
+                isInCart(product.id) 
+                  ? 'bg-green-600 text-white hover:bg-green-700' 
+                  : 'bg-blue-600 text-white hover:bg-blue-700'
+              }`}
+            >
+              {isInCart(product.id) ? (
+                <Check size={16} weight="bold" />
+              ) : (
+                <ShoppingCart size={16} weight="regular" />
+              )}
+            </motion.button>
+
+            {/* Botón de cotización - expandido */}
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={handleQuoteRequest}
+              className="flex-1 bg-gray-900 text-white py-2 px-3 rounded-md text-sm font-medium hover:bg-gray-800 transition-colors duration-200 flex items-center justify-center space-x-2"
+            >
+              <FaQuoteLeft className="text-xs" />
+              <span>Cotizar</span>
+            </motion.button>
+          </div>
         </div>
       </Link>
     </motion.div>

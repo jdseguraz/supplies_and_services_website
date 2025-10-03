@@ -1,4 +1,5 @@
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaLinkedin } from 'react-icons/fa'
+import { CONTACT_CONFIG } from '../../constants/contact'
 
 const Footer = () => {
   return (
@@ -7,9 +8,9 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {/* Company Info */}
           <div>
-            <img src="/supplies-logo-full.png" alt="Supplies and Services ACR SAS" className='h-16 mb-4 filter brightness-0 invert' />
+            <img src="/supplies-logo-full.png" alt={CONTACT_CONFIG.companyName} className='h-16 mb-4 filter brightness-0 invert' />
             <p className="text-gray-300 text-sm leading-relaxed">
-              Cálculo - Diseño - Suministro e instalación para plantas agro-industriales
+              {CONTACT_CONFIG.slogan}
             </p>
           </div>
 
@@ -30,15 +31,15 @@ const Footer = () => {
             <div className="space-y-3 text-gray-300 text-sm">
               <div className="flex items-center">
                 <FaPhone className="mr-3 text-blue-400" />
-                <span>+57 313 464 6224</span>
+                <span>{CONTACT_CONFIG.phone}</span>
               </div>
               <div className="flex items-center">
                 <FaEnvelope className="mr-3 text-blue-400" />
-                <span>gerencia@suppliesandservices.net</span>
+                <span>{CONTACT_CONFIG.email}</span>
               </div>
               <div className="flex items-center">
                 <FaMapMarkerAlt className="mr-3 text-blue-400" />
-                <span>CALLE 59 N° 50-35 BARRIO PRADO CENTRO - MEDELLÍN</span>
+                <span>{CONTACT_CONFIG.address}</span>
               </div>
             </div>
           </div>
@@ -46,7 +47,7 @@ const Footer = () => {
 
         <div className="border-t border-gray-700 pt-6">
           <div className="text-center text-gray-400 text-sm">
-            <p>&copy; {new Date().getFullYear()} Supplies and Services ACR SAS. Todos los derechos reservados.</p>
+            <p>&copy; {new Date().getFullYear()} {CONTACT_CONFIG.companyName}. Todos los derechos reservados.</p>
           </div>
         </div>
       </div>

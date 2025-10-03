@@ -5,6 +5,7 @@ import { FaArrowLeft, FaQuoteLeft, FaChevronLeft, FaChevronRight } from 'react-i
 import { ShoppingCart, Check } from 'phosphor-react'
 import { getProductById, getCategoryBySlug } from '../../data/products'
 import { useCart } from '../../contexts/CartContext'
+import { CONTACT_CONFIG, URLS } from '../../constants/contact'
 
 const Product = () => {
   const { id } = useParams()
@@ -26,8 +27,28 @@ const Product = () => {
   }, [id])
 
   const handleQuoteRequest = () => {
-    console.log(`Solicitud de cotización para: ${product.name}`)
-    // Aquí se podría abrir un modal, redirigir a contacto, etc.
+    if (!product) return
+    
+    // Crear mensaje detallado para WhatsApp
+    let message = `¡Hola! Me interesa cotizar el siguiente producto:\n\n`
+    message += `📦 *${product.name}*\n\n`
+    
+    if (product.description) {
+      message += `📋 *Descripción:*\n${product.description.substring(0, 200)}${product.description.length > 200 ? '...' : ''}\n\n`
+    }
+    
+    if (product.specifications && product.specifications.length > 0) {
+      message += `🔧 *Especificaciones destacadas:*\n`
+      product.specifications.slice(0, 3).forEach(spec => {
+        message += `• ${spec}\n`
+      })
+      message += '\n'
+    }
+    
+    message += `¿Podrían enviarme información sobre precio, disponibilidad y tiempo de entrega?\n\n¡Gracias!`
+    
+    const encodedMessage = encodeURIComponent(message)
+    window.open(`${URLS.whatsapp}/${CONTACT_CONFIG.whatsappNumber}?text=${encodedMessage}`, '_blank')
   }
 
   const handleAddToCart = () => {

@@ -5,6 +5,7 @@ import { getFeaturedCategories } from '../../data/products'
 import { FaChevronDown } from 'react-icons/fa'
 import { ShoppingCart, List, X } from 'phosphor-react'
 import { useCart } from '../../contexts/CartContext'
+import { CONTACT_CONFIG } from '../../constants/contact'
 
 const Navbar = () => {
   const [isProductsOpen, setIsProductsOpen] = useState(false)
@@ -48,7 +49,7 @@ const Navbar = () => {
         <div className="flex justify-between items-center">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3 hover:opacity-90 transition-opacity">
-            <img src="/supplies-logo-full.png" alt="Supplies and Services ACR SAS" className='h-12' />
+            <img src="/supplies-logo-full.png" alt={CONTACT_CONFIG.companyName} className='h-12' />
             <div className="hidden md:block">
               <div className="text-xl font-bold text-gray-800">
                 <span className="text-blue-600">Supplies</span> and <span className="text-blue-600">Services</span>

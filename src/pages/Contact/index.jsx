@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, FaUser, FaBuilding } from 'react-icons/fa'
+import { CONTACT_CONFIG } from '../../constants/contact'
 
 const Contact = () => {
   return (
@@ -133,7 +134,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <p className="font-medium text-gray-800">Teléfono</p>
-                    <p className="text-gray-600">+57 313 464 6224</p>
+                    <p className="text-gray-600">{CONTACT_CONFIG.phone}</p>
                   </div>
                 </div>
                 
@@ -143,7 +144,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <p className="font-medium text-gray-800">Email</p>
-                    <p className="text-gray-600">gerencia@suppliesandservices.net</p>
+                    <p className="text-gray-600">{CONTACT_CONFIG.email}</p>
                   </div>
                 </div>
                 
@@ -153,7 +154,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <p className="font-medium text-gray-800">Ubicación</p>
-                    <p className="text-gray-600">CALLE 59 N° 50-35 BARRIO PRADO CENTRO - MEDELLÍN</p>
+                    <p className="text-gray-600">{CONTACT_CONFIG.address}</p>
                   </div>
                 </div>
                 
@@ -164,9 +165,9 @@ const Contact = () => {
                   <div>
                     <p className="font-medium text-gray-800">Horario de Atención</p>
                     <div className="text-gray-600 text-sm">
-                      <p>Lun - Vie: 8:00 AM - 5:00 PM</p>
-                      <p>Sábado: 8:00 AM - 12:00 PM</p>
-                      <p>Domingo: Cerrado</p>
+                      <p>{CONTACT_CONFIG.businessHours.weekdays}</p>
+                      <p>{CONTACT_CONFIG.businessHours.saturday}</p>
+                      <p>{CONTACT_CONFIG.businessHours.sunday}</p>
                     </div>
                   </div>
                 </div>
@@ -175,9 +176,9 @@ const Contact = () => {
 
             {/* Company Info */}
             <div className="bg-blue-600 text-white p-6 rounded-xl shadow-lg">
-              <h3 className="text-xl font-bold mb-4">Supplies and Services ACR SAS</h3>
+              <h3 className="text-xl font-bold mb-4">{CONTACT_CONFIG.companyName}</h3>
               <p className="text-blue-100 mb-4">
-                Cálculo - Diseño - Suministro e instalación para plantas agro-industriales
+                {CONTACT_CONFIG.slogan}
               </p>
               <div className="space-y-2 text-blue-100 text-sm">
                 <p>✓ Más de 26 años de experiencia</p>
@@ -190,14 +191,14 @@ const Contact = () => {
             {/* Google Maps */}
             <div className="rounded-xl overflow-hidden shadow-lg">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.111895068478!2d-75.56892612503743!3d6.244203193774!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e442824dcbfe033%3A0x201ca1b7158b1a11!2sCl.%2059%20%2350-35%2C%20Medell%C3%ADn%2C%20Antioquia%2C%20Colombia!5e0!3m2!1sen!2sus!4v1702834567890!5m2!1sen!2sus"
+                src={CONTACT_CONFIG.mapsEmbedUrl}
                 width="100%"
                 height="300"
                 style={{ border: 0 }}
                 allowFullScreen=""
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Ubicación de Supplies and Services ACR SAS"
+                title={`Ubicación de ${CONTACT_CONFIG.companyName}`}
               ></iframe>
             </div>
           </motion.div>
