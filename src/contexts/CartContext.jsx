@@ -1,21 +1,56 @@
-import { createContext, useContext, useReducer } from 'react'
+import { createContext, useContext, useReducer, useEffect } from 'react'
 
-// Estado inicial del carrito
-const initialState = {
-  items: [],
-  totalItems: 0
+// Clave para localStorage
+const CART_STORAGE_KEY = 'supplies_cart'
+
+// Función para cargar el carrito desde localStorage
+const loadCartFromStorage = () => {
+  try {
+    const savedCart = localStorage.getItem(CART_STORAGE_KEY)
+    if (savedCart) {
+      const parsedCart = JSON.parse(savedCart)
+      // Validar que el formato sea correcto
+      if (parsedCart && Array.isArray(parsedCart.items)) {
+        return {
+          items: parsedCart.items,
+          totalItems: parsedCart.items.reduce((total, item) => total + item.quantity, 0)
+        }
+      }
+    }
+  } catch (error) {
+    console.error('Error loading cart from localStorage:', error)
+  }
+  return {
+    items: [],
+    totalItems: 0
+  }
 }
+
+// Función para guardar el carrito en localStorage
+const saveCartToStorage = (cartState) => {
+  try {
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartState))
+  } catch (error) {
+    console.error('Error saving cart to localStorage:', error)
+  }
+}
+
+// Estado inicial del carrito (ahora carga desde localStorage)
+const initialState = loadCartFromStorage()
 
 // Tipos de acciones
 const CART_ACTIONS = {
   ADD_ITEM: 'ADD_ITEM',
   REMOVE_ITEM: 'REMOVE_ITEM',
   UPDATE_QUANTITY: 'UPDATE_QUANTITY',
-  CLEAR_CART: 'CLEAR_CART'
+  CLEAR_CART: 'CLEAR_CART',
+  HYDRATE_CART: 'HYDRATE_CART'
 }
 
 // Reducer para manejar las acciones del carrito
 const cartReducer = (state, action) => {
+  let newState
+  
   switch (action.type) {
     case CART_ACTIONS.ADD_ITEM: {
       const { product, quantity = 1 } = action.payload
@@ -34,22 +69,24 @@ const cartReducer = (state, action) => {
         newItems = [...state.items, { product, quantity }]
       }
       
-      return {
+      newState = {
         ...state,
         items: newItems,
         totalItems: newItems.reduce((total, item) => total + item.quantity, 0)
       }
+      break
     }
     
     case CART_ACTIONS.REMOVE_ITEM: {
       const { productId } = action.payload
       const newItems = state.items.filter(item => item.product.id !== productId)
       
-      return {
+      newState = {
         ...state,
         items: newItems,
         totalItems: newItems.reduce((total, item) => total + item.quantity, 0)
       }
+      break
     }
     
     case CART_ACTIONS.UPDATE_QUANTITY: {
@@ -69,20 +106,34 @@ const cartReducer = (state, action) => {
           : item
       )
       
-      return {
+      newState = {
         ...state,
         items: newItems,
         totalItems: newItems.reduce((total, item) => total + item.quantity, 0)
       }
+      break
     }
     
     case CART_ACTIONS.CLEAR_CART: {
-      return initialState
+      newState = {
+        items: [],
+        totalItems: 0
+      }
+      break
+    }
+    
+    case CART_ACTIONS.HYDRATE_CART: {
+      // No guardar en localStorage ya que viene de allí
+      return action.payload
     }
     
     default:
       return state
   }
+  
+  // Guardar el nuevo estado en localStorage
+  saveCartToStorage(newState)
+  return newState
 }
 
 // Crear el contexto
@@ -100,6 +151,29 @@ export const useCart = () => {
 // Proveedor del contexto
 export const CartProvider = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, initialState)
+
+  // Efecto para manejar la hidratación y sincronización
+  useEffect(() => {
+    // Verificar si hay cambios en localStorage desde otras pestañas
+    const handleStorageChange = (e) => {
+      if (e.key === CART_STORAGE_KEY) {
+        // Recargar el carrito si cambió en otra pestaña
+        const updatedCart = loadCartFromStorage()
+        dispatch({ 
+          type: 'HYDRATE_CART', 
+          payload: updatedCart 
+        })
+      }
+    }
+
+    // Escuchar cambios en localStorage
+    window.addEventListener('storage', handleStorageChange)
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('storage', handleStorageChange)
+    }
+  }, [])
   
   // Funciones para manejar el carrito
   const addToCart = (product, quantity = 1) => {
@@ -126,6 +200,15 @@ export const CartProvider = ({ children }) => {
   const clearCart = () => {
     dispatch({ type: CART_ACTIONS.CLEAR_CART })
   }
+
+  // Función para limpiar el localStorage (útil para debugging)
+  const clearCartStorage = () => {
+    try {
+      localStorage.removeItem(CART_STORAGE_KEY)
+    } catch (error) {
+      console.error('Error clearing cart from localStorage:', error)
+    }
+  }
   
   const isInCart = (productId) => {
     return state.items.some(item => item.product.id === productId)
@@ -142,6 +225,7 @@ export const CartProvider = ({ children }) => {
     removeFromCart,
     updateQuantity,
     clearCart,
+    clearCartStorage,
     isInCart,
     getItemQuantity
   }
