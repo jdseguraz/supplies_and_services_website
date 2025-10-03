@@ -17,15 +17,25 @@ const Category = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section de la Categoría */}
-      <section className="relative bg-gradient-to-br from-blue-600 to-blue-800 text-white py-20">
-        <div className="absolute inset-0 bg-black/20"></div>
+      <section 
+        className="relative text-white py-12 md:py-16 overflow-hidden"
+        style={{
+          backgroundImage: 'url(/foto3.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        {/* Overlay oscuro para mejorar legibilidad */}
+        <div className="absolute inset-0 bg-black/60"></div>
+        
         <div className="container mx-auto px-4 relative z-10">
           {/* Breadcrumb */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="flex items-center space-x-2 text-blue-100 mb-6"
+            className="flex items-center space-x-2 text-gray-200 mb-6"
           >
             <Link to="/" className="hover:text-white transition-colors">
               Inicio
@@ -35,58 +45,40 @@ const Category = () => {
               Productos
             </Link>
             <FaChevronRight className="text-xs" />
-            <span className="text-white">{category.name}</span>
+            <span className="text-white font-medium">{category.name}</span>
           </motion.div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <div className="flex items-center space-x-4 mb-6">
-                <div className="text-4xl">{category.icon}</div>
-                <h1 className="text-4xl lg:text-5xl font-bold">
-                  {category.name}
-                </h1>
-              </div>
-              <p className="text-xl text-blue-100 mb-8 leading-relaxed">
-                {category.description}
-              </p>
-              <div className="flex items-center space-x-4">
-                <Link
-                  to="/productos"
-                  className="flex items-center space-x-2 text-blue-100 hover:text-white transition-colors"
-                >
-                  <FaArrowLeft />
-                  <span>Volver a Productos</span>
-                </Link>
-                <span className="text-blue-300">|</span>
-                <span className="text-blue-100">
-                  {products.length} producto{products.length !== 1 ? 's' : ''} disponible{products.length !== 1 ? 's' : ''}
-                </span>
-              </div>
-            </motion.div>
+          {/* Contenido centrado sin imagen */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center"
+          >
+            <div className="flex items-center justify-center space-x-4 mb-4">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold">
+                {category.name}
+              </h1>
+            </div>
             
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative"
-            >
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-                <img 
-                  src={category.image} 
-                  alt={category.name}
-                  className="w-full h-80 object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-              </div>
-              {/* Decorative elements */}
-              <div className="absolute -top-4 -right-4 w-24 h-24 bg-white/10 rounded-full blur-xl"></div>
-              <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-white/5 rounded-full blur-xl"></div>
-            </motion.div>
-          </div>
+            <p className="text-lg md:text-xl text-gray-200 mb-6 max-w-3xl mx-auto leading-relaxed">
+              {category.description}
+            </p>
+            
+            <div className="flex flex-col sm:flex-row items-center justify-center space-y-2 sm:space-y-0 sm:space-x-6">
+              <Link
+                to="/productos"
+                className="flex items-center space-x-2 text-gray-200 hover:text-white transition-colors"
+              >
+                <FaArrowLeft />
+                <span>Volver a Productos</span>
+              </Link>
+              <span className="hidden sm:block text-gray-400">|</span>
+              <span className="text-gray-200">
+                {products.length} producto{products.length !== 1 ? 's' : ''} disponible{products.length !== 1 ? 's' : ''}
+              </span>
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -99,9 +91,6 @@ const Category = () => {
             transition={{ duration: 0.8 }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Productos en <span className="text-blue-600">{category.name}</span>
-            </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               Descubre nuestra selección de productos especializados en {category.name.toLowerCase()}
             </p>
@@ -151,7 +140,7 @@ const Category = () => {
             className="text-center mb-12"
           >
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Otras <span className="text-blue-600">Categorías</span>
+              Otras <span className="text-blue-600">categorías</span>
             </h2>
             <p className="text-gray-600">
               Explora nuestras otras líneas de productos y servicios
